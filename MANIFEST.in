@@ -1,0 +1,6 @@
+recursive-include python_presenter *
+include VERSION
+include README.md
+recursive-exclude * __pycache__
+recursive-exclude * *.py[co]
+
