@@ -27,3 +27,15 @@ extend-exclude = '''
 [build-system]
 requires = ["setuptools>=65.5"]
 build-backend = "setuptools.build_meta"
+
+[tool.pytest.ini_options]
+addopts = "-v --cov=python_presenter --cov-report=html --cov-report=term-missing"
+testpaths = "tests"
+pythonpath = "."
+
+[tool.coverage.run]
+source = ["python_presenter"]
+omit = [
+    "*/__init__.py",
+    "*/tests/*"
+]

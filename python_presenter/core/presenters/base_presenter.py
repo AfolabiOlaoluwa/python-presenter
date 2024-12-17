@@ -10,3 +10,4 @@ class BasePresenter:
     def __getattr__(self, attr):
         if attr in self.__class__.__dict__:
             return getattr(self, attr)
+        raise AttributeError(f"'{self.__class__.__name__}' object has no attribute '{attr}'")

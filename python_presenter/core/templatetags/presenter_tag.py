@@ -1,29 +1,28 @@
 import sys
 
-if "django" in sys.modules:
-    try:
-        from django import template
+try:
+    from python_presenter.core.presenters.presenter_helper import present
 
-        from python_presenter.core.presenters.presenter_helper import present
+    def present_object(obj, presenter_class=None):
+        """
+        A function to present an object using the specified presenter class.
 
-        register = template.Library()
+        Args:
+            obj: The object to be presented.
+            presenter_class: The presenter class to use. Defaults to a generic presenter.
 
-        @register.simple_tag(takes_context=True)
-        def present_object(context, obj, presenter_class=None):
-            """
-            A template tag to present an object using the specified presenter class.
+        Returns:
+            An instance of the presenter class.
+        """
+        return present(obj, presenter_class)
 
-            Args:
-                context: Template context.
-                obj: The object to be presented.
-                presenter_class: The presenter class to use. Defaults to a generic presenter.
+    if "django" in sys.modules:
+        try:
+            from django import template
 
-            Returns:
-                An instance of the presenter class.
-            """
-            return present(obj, presenter_class)
-
-    except ImportError:
-        raise ImportError("Django is installed but its template system could not be loaded.")
-else:
-    register = None
+            register = template.Library()
+            register.simple_tag(takes_context=True)(present_object)
+        except ImportError:
+            pass
+except ImportError:
+    present_object = None
