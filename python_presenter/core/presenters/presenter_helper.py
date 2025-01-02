@@ -2,7 +2,7 @@ from importlib import import_module
 from inspect import getmodule
 
 
-def present(obj, presenter_class=None):
+def present(obj, presenter_class=None, context=None):
     """
     Presents an object using either a provided presenter class or auto-discovers
     the appropriate presenter class from the object's module.
@@ -10,6 +10,7 @@ def present(obj, presenter_class=None):
     Args:
         obj: The object to be presented
         presenter_class: Optional presenter class to use
+        context: Optional template context to use
 
     Returns:
         An instance of the presenter class initialized with the object
@@ -20,4 +21,4 @@ def present(obj, presenter_class=None):
         presenter_module = f"{current_module}.presenter"
         module = import_module(presenter_module)
         presenter_class = getattr(module, presenter_class)
-    return presenter_class(obj)
+    return presenter_class(obj, context=context)

@@ -16,8 +16,9 @@ class User:
 
 
 class UserPresenter:
-    def __init__(self, obj):
+    def __init__(self, obj, context=None):
         self.obj = obj
+        self.context = context
 
     def display_caps_name(self):
         return self.obj.name.upper()
@@ -51,7 +52,7 @@ class TestPresenterBasicFunctionality:
 
     def test_present_with_explicit_presenter(self, user: User):
         """Test present() when presenter_class is explicitly provided"""
-        result = present(user, UserPresenter)
+        result = present(user, UserPresenter, context=None)
 
         assert isinstance(result, UserPresenter)
         assert result.obj == user
@@ -65,7 +66,7 @@ class TestPresenterBasicFunctionality:
                 pass
 
         with pytest.raises(TypeError):
-            present(user, InvalidPresenter)
+            present(user, InvalidPresenter, context=None)
 
 
 class TestPresenterAutoDiscovery:
@@ -92,14 +93,14 @@ class TestPresenterAutoDiscovery:
             - The returned object is an instance of `UserPresenter`.
             - The presenter instance encapsulates the original `User` object.
         """
-        presenter = present(user)
+        presenter = present(user, context=None)
 
         assert isinstance(presenter, UserPresenter)
         assert presenter.obj == user
 
     def test_present_with_custom_presenter(self, user: User):
         """Test present() method when a custom presenter is explicitly provided."""
-        presenter = present(user, presenter_class=UserPresenter)
+        presenter = present(user, presenter_class=UserPresenter, context=None)
 
         assert isinstance(presenter, UserPresenter)
         assert presenter.obj == user
@@ -118,7 +119,7 @@ class TestPresenterErrorHandling:
                 mock_import.return_value = Mock(spec=[])
 
                 with pytest.raises(AttributeError):
-                    present(User("Test", "test@example.com"))
+                    present(User("Test", "test@example.com"), context=None)
 
     def test_invalid_presenter_class(self, user: User):
         """Test behavior when invalid presenter class is provided"""
@@ -128,4 +129,4 @@ class TestPresenterErrorHandling:
                 pass  # No obj parameter
 
         with pytest.raises(TypeError):
-            present(user, InvalidPresenter)
+            present(user, InvalidPresenter, context=None)
