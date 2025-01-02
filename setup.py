@@ -6,7 +6,7 @@ application_dependencies = ["requests>=2.32", "tenacity>= 9.0.0"]
 
 prod_dependencies = []
 
-test_dependencies = ["pytest", "pytest-env", "pytest-cov", "vcrpy", "requests-mock"]
+test_dependencies = ["pytest", "pytest-django", "pytest-env", "pytest-cov", "vcrpy", "requests-mock"]
 lint_dependencies = ["flake8", "flake8-docstrings", "black", "isort"]
 docs_dependencies = []
 

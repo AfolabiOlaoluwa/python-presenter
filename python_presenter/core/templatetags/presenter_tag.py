@@ -3,7 +3,7 @@ import sys
 try:
     from python_presenter.core.presenters.presenter_helper import present
 
-    def present_object(obj, presenter_class=None):
+    def present_object(context, obj, presenter_class=None):
         """
         A function to present an object using the specified presenter class.
 
